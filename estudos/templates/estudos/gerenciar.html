@@ -1,0 +1,471 @@
+{% load static %}
+
+{{ form.media }}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gerenciar - TechHub</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudos/css/style.css' %}"
+    >
+
+</head>
+
+<body>
+
+<header class="menu">
+
+    <div class="logo">
+        TechHub
+    </div>
+
+    <nav>
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="inicio">
+
+        <div class="intro">
+
+            <span class="tag">
+                ADMINISTRAÇÃO
+            </span>
+
+            <h1>
+                Gerenciar estudos
+            </h1>
+
+            <p>
+                Crie e organize as áreas de estudo do TechHub.
+            </p>
+
+        </div>
+
+        <div style="text-align: center; margin-bottom: 35px;">
+
+    <button
+        type="button"
+        onclick="document.getElementById('form-area').style.display='block'"
+        style="
+            padding: 13px 22px;
+            border: none;
+            border-radius: 10px;
+            background: #4f63b8;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        "
+    >
+        + Nova área
+    </button>
+
+</div>
+
+
+<div
+    id="form-area"
+    style="
+        display: none;
+        max-width: 600px;
+        margin: 0 auto 45px;
+        padding: 30px;
+        background: white;
+        border: 1px solid #e4e8ef;
+        border-radius: 18px;
+    "
+>
+
+    <h2 style="margin-bottom: 25px;">
+        Criar nova área
+    </h2>
+
+
+    <form method="POST">
+        <input
+            type="hidden"
+            name="tipo"
+            value="area"
+        >
+        {% csrf_token %}
+
+        <label>
+            Nome da área
+        </label>
+
+        <input
+            type="text"
+            name="nome"
+            placeholder="Ex: Banco de Dados"
+            required
+            style="
+                width: 100%;
+                padding: 12px;
+                margin: 8px 0 20px;
+                border: 1px solid #dfe3ea;
+                border-radius: 8px;
+            "
+        >
+
+
+        <label>
+            Descrição
+        </label>
+
+        <textarea
+            name="descricao"
+            placeholder="Descreva essa área..."
+            rows="4"
+            style="
+                width: 100%;
+                padding: 12px;
+                margin: 8px 0 20px;
+                border: 1px solid #dfe3ea;
+                border-radius: 8px;
+                resize: vertical;
+            "
+        ></textarea>
+
+
+        <label>
+            Ícone
+        </label>
+
+        <input
+            type="text"
+            name="icone"
+            placeholder="Ex: 🗄️"
+            maxlength="10"
+            style="
+                width: 100%;
+                padding: 12px;
+                margin: 8px 0 25px;
+                border: 1px solid #dfe3ea;
+                border-radius: 8px;
+            "
+        >
+
+
+        <button
+            type="submit"
+            style="
+                padding: 12px 20px;
+                border: none;
+                border-radius: 10px;
+                background: #172033;
+                color: white;
+                font-weight: 700;
+                cursor: pointer;
+            "
+        >
+            Criar área
+        </button>
+
+    </form>
+
+</div>
+<div style="text-align: center; margin-bottom: 35px;">
+
+    <button
+        type="button"
+        onclick="document.getElementById('form-categoria').style.display='block'"
+        style="
+            padding: 13px 22px;
+            border: none;
+            border-radius: 10px;
+            background: #4f63b8;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        "
+    >
+        + Nova categoria
+    </button>
+
+</div>
+
+
+<div
+    id="form-categoria"
+    style="
+        display: none;
+        max-width: 600px;
+        margin: 0 auto 45px;
+        padding: 30px;
+        background: white;
+        border: 1px solid #e4e8ef;
+        border-radius: 18px;
+    "
+>
+
+    <h2 style="margin-bottom: 25px;">
+        Criar nova categoria
+    </h2>
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input
+            type="hidden"
+            name="tipo"
+            value="categoria"
+        >
+
+
+        <label>
+            Área
+        </label>
+
+        <select
+            name="area"
+            required
+            style="
+                width: 100%;
+                padding: 12px;
+                margin: 8px 0 20px;
+                border: 1px solid #dfe3ea;
+                border-radius: 8px;
+            "
+        >
+
+            <option value="">
+                Selecione uma área
+            </option>
+
+            {% for area in areas %}
+
+                <option value="{{ area.id }}">
+                    {{ area.nome }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <label>
+            Nome da categoria
+        </label>
+
+        <input
+            type="text"
+            name="nome"
+            placeholder="Ex: Redes"
+            required
+            style="
+                width: 100%;
+                padding: 12px;
+                margin: 8px 0 20px;
+                border: 1px solid #dfe3ea;
+                border-radius: 8px;
+            "
+        >
+
+
+        <label>
+            Descrição
+        </label>
+
+        <textarea
+            name="descricao"
+            placeholder="Descreva essa categoria..."
+            rows="4"
+            style="
+                width: 100%;
+                padding: 12px;
+                margin: 8px 0 25px;
+                border: 1px solid #dfe3ea;
+                border-radius: 8px;
+                resize: vertical;
+            "
+        ></textarea>
+
+
+        <button
+            type="submit"
+            style="
+                padding: 12px 20px;
+                border: none;
+                border-radius: 10px;
+                background: #172033;
+                color: white;
+                font-weight: 700;
+                cursor: pointer;
+            "
+        >
+            Criar categoria
+        </button>
+
+    </form>
+
+</div>
+<div style="text-align: center; margin-bottom: 35px;">
+
+    <button
+        type="button"
+        onclick="document.getElementById('form-conteudo').style.display='block'"
+        style="
+            padding: 13px 22px;
+            border: none;
+            border-radius: 10px;
+            background: #4f63b8;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        "
+    >
+        + Novo conteúdo
+    </button>
+
+</div>
+
+
+<div
+    id="form-conteudo"
+    style="
+        display: none;
+        max-width: 700px;
+        margin: 0 auto 45px;
+        padding: 30px;
+        background: white;
+        border: 1px solid #e4e8ef;
+        border-radius: 18px;
+    "
+>
+
+    <h2 style="margin-bottom: 25px;">
+        Criar novo conteúdo
+    </h2>
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input
+            type="hidden"
+            name="tipo"
+            value="conteudo"
+        >
+
+        <label>
+            Categoria
+        </label>
+
+        {{ form.categoria }}
+
+        <br><br>
+
+        <label>
+            Título
+        </label>
+
+        {{ form.titulo }}
+
+        <br><br>
+
+        <label>
+            Conteúdo
+        </label>
+
+        {{ form.conteudo }}
+
+        <br><br>
+
+        <button
+            type="submit"
+            style="
+                padding: 12px 20px;
+                border: none;
+                border-radius: 10px;
+                background: #172033;
+                color: white;
+                font-weight: 700;
+                cursor: pointer;
+            "
+        >
+            Criar conteúdo
+        </button>
+
+    </form>
+
+</div>
+        <div class="cards">
+
+            {% for area in areas %}
+
+                <div class="card">
+
+                    <div class="icone">
+                        {{ area.icone }}
+                    </div>
+
+                    <h2>
+                        {{ area.nome }}
+                    </h2>
+
+                    <p>
+                        {{ area.descricao }}
+                    </p>
+
+                </div>
+
+            {% empty %}
+
+                <div class="sem-areas">
+
+                    <h2>
+                        Nenhuma área cadastrada
+                    </h2>
+
+                    <p>
+                        Comece criando sua primeira área de estudo.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        TechHub © 2026
+    </p>
+
+</footer>
+
+</body>
+
+</html>

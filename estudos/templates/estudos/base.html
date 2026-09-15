@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+            TechHub
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudos/css/style.css' %}"
+    >
+
+    {% block extra_head %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+    <header class="menu">
+
+        <div class="logo">
+            TechHub
+        </div>
+
+        <div class="menu-direita">
+
+            <form
+                method="GET"
+                action="{% url 'buscar' %}"
+                class="busca-menu"
+            >
+
+                <span class="icone-busca">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Buscar conteúdos..."
+                    autocomplete="off"
+                >
+
+            </form>
+
+            <nav class="menu-links">
+
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+
+                <a href="{% url 'gerenciar' %}">
+                    Gerenciar
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            TechHub © 2026
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

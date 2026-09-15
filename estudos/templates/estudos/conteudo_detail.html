@@ -1,0 +1,70 @@
+{% extends "estudos/base.html" %}
+
+
+{% block title %}
+    {{ conteudo.titulo }} - TechHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="pagina-conteudo">
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'area_detail' area.slug %}">
+            {{ area.nome }}
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'categoria_detail' area.slug categoria.slug %}">
+            {{ categoria.nome }}
+        </a>
+
+        <span>›</span>
+
+        <span>
+            {{ conteudo.titulo }}
+        </span>
+
+    </div>
+
+
+    <header class="titulo-conteudo">
+
+        <span class="tag">
+            {{ categoria.nome|upper }}
+        </span>
+
+        <h1>
+            {{ conteudo.titulo }}
+        </h1>
+
+    </header>
+
+
+    <article class="conteudo">
+
+        {{ conteudo.conteudo|safe }}
+
+    </article>
+
+
+    <div class="voltar">
+
+        <a href="{% url 'categoria_detail' area.slug categoria.slug %}">
+            ← Voltar para {{ categoria.nome }}
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

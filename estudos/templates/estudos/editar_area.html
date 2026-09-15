@@ -1,0 +1,169 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Editar {{ area.nome }} - TechHub</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudos/css/style.css' %}"
+    >
+</head>
+
+<body>
+
+<header class="menu">
+
+    <div class="logo">
+        TechHub
+    </div>
+
+    <nav>
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="pagina-edicao">
+
+        <div class="breadcrumb">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <span>›</span>
+
+            <span>
+                Editar {{ area.nome }}
+            </span>
+
+        </div>
+
+
+        <div class="formulario-edicao">
+
+            <span class="tag">
+                EDITAR ÁREA
+            </span>
+
+            <h1>
+                {{ area.nome }}
+            </h1>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <label for="nome">
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    value="{{ area.nome }}"
+                    required
+                >
+
+
+                <label for="descricao">
+                    Descrição
+                </label>
+
+                <textarea
+                    id="descricao"
+                    name="descricao"
+                    rows="6"
+                >{{ area.descricao }}</textarea>
+
+
+                <label for="icone">
+                    Ícone
+                </label>
+
+                <input
+                    type="text"
+                    id="icone"
+                    name="icone"
+                    value="{{ area.icone }}"
+                    maxlength="10"
+                >
+
+
+                <div class="acoes-edicao">
+
+                    <button
+                        type="submit"
+                        form="form-excluir-area"
+                        class="botao-excluir"
+                    >
+                        🗑 Excluir área
+                    </button>
+
+
+                    <div class="acoes-principais">
+
+                        <a
+                            href="{% url 'home' %}"
+                            class="botao-cancelar"
+                        >
+                            Cancelar
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="botao-salvar"
+                        >
+                            Salvar alterações
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+            <form
+                id="form-excluir-area"
+                method="POST"
+                action="{% url 'excluir_area' area.id %}"
+                onsubmit="return confirm('Tem certeza que deseja excluir esta área? Todas as categorias e conteúdos dentro dela também serão excluídos. Esta ação não pode ser desfeita.');"
+            >
+                {% csrf_token %}
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        TechHub © 2026
+    </p>
+
+</footer>
+
+</body>
+
+</html>

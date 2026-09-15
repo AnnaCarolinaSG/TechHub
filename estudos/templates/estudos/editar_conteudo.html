@@ -1,0 +1,167 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Editar {{ conteudo.titulo }} - TechHub</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudos/css/style.css' %}"
+    >
+
+    {{ form.media }}
+</head>
+
+<body>
+
+<header class="menu">
+
+    <div class="logo">
+        TechHub
+    </div>
+
+    <nav>
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="pagina-edicao">
+
+        <div class="breadcrumb">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <span>›</span>
+
+            <a href="{% url 'area_detail' conteudo.categoria.area.slug %}">
+                {{ conteudo.categoria.area.nome }}
+            </a>
+
+            <span>›</span>
+
+            <a href="{% url 'categoria_detail' conteudo.categoria.area.slug conteudo.categoria.slug %}">
+                {{ conteudo.categoria.nome }}
+            </a>
+
+            <span>›</span>
+
+            <span>
+                Editar
+            </span>
+
+        </div>
+
+
+        <div class="formulario-edicao">
+
+            <span class="tag">
+                EDITAR CONTEÚDO
+            </span>
+
+            <h1>
+                {{ conteudo.titulo }}
+            </h1>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <label>
+                    Categoria
+                </label>
+
+                {{ form.categoria }}
+
+
+                <label>
+                    Título
+                </label>
+
+                {{ form.titulo }}
+
+
+                <label>
+                    Conteúdo
+                </label>
+
+                {{ form.conteudo }}
+
+
+                <div class="acoes-edicao">
+
+                    <button
+                        type="submit"
+                        form="form-excluir-conteudo"
+                        class="botao-excluir"
+                    >
+                        🗑 Excluir conteúdo
+                    </button>
+
+
+                    <div class="acoes-principais">
+
+                        <a
+                            href="{% url 'categoria_detail' conteudo.categoria.area.slug conteudo.categoria.slug %}"
+                            class="botao-cancelar"
+                        >
+                            Cancelar
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="botao-salvar"
+                        >
+                            Salvar alterações
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+            <form
+                id="form-excluir-conteudo"
+                method="POST"
+                action="{% url 'excluir_conteudo' conteudo.id %}"
+                onsubmit="return confirm('Tem certeza que deseja excluir este conteúdo? Esta ação não pode ser desfeita.');"
+            >
+                {% csrf_token %}
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        TechHub © 2026
+    </p>
+
+</footer>
+
+</body>
+
+</html>

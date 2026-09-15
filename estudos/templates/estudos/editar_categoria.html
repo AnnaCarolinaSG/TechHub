@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Editar {{ categoria.nome }} - TechHub</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudos/css/style.css' %}"
+    >
+</head>
+
+<body>
+
+<header class="menu">
+
+    <div class="logo">
+        TechHub
+    </div>
+
+    <nav>
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="pagina-edicao">
+
+        <div class="breadcrumb">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <span>›</span>
+
+            <a href="{% url 'area_detail' categoria.area.slug %}">
+                {{ categoria.area.nome }}
+            </a>
+
+            <span>›</span>
+
+            <span>
+                Editar {{ categoria.nome }}
+            </span>
+
+        </div>
+
+
+        <div class="formulario-edicao">
+
+            <span class="tag">
+                EDITAR CATEGORIA
+            </span>
+
+            <h1>
+                {{ categoria.nome }}
+            </h1>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <label for="nome">
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    value="{{ categoria.nome }}"
+                    required
+                >
+
+
+                <label for="descricao">
+                    Descrição
+                </label>
+
+                <textarea
+                    id="descricao"
+                    name="descricao"
+                    rows="6"
+                >{{ categoria.descricao }}</textarea>
+
+
+                <div class="acoes-edicao">
+
+                    <button
+                        type="submit"
+                        form="form-excluir-categoria"
+                        class="botao-excluir"
+                    >
+                        🗑 Excluir categoria
+                    </button>
+
+
+                    <div class="acoes-principais">
+
+                        <a
+                            href="{% url 'area_detail' categoria.area.slug %}"
+                            class="botao-cancelar"
+                        >
+                            Cancelar
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="botao-salvar"
+                        >
+                            Salvar alterações
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+            <form
+                id="form-excluir-categoria"
+                method="POST"
+                action="{% url 'excluir_categoria' categoria.id %}"
+                onsubmit="return confirm('Tem certeza que deseja excluir esta categoria? Todos os conteúdos dentro dela também serão excluídos. Esta ação não pode ser desfeita.');"
+            >
+                {% csrf_token %}
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>
+        TechHub © 2026
+    </p>
+</footer>
+
+</body>
+
+</html>

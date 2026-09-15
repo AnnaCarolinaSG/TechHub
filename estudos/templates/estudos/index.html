@@ -1,0 +1,86 @@
+{% extends "estudos/base.html" %}
+
+
+{% block title %}
+    TechHub - Home
+{% endblock %}
+
+
+{% block content %}
+
+<section class="inicio">
+
+    <div class="intro">
+
+        <span class="tag">
+            PLATAFORMA DE ESTUDOS
+        </span>
+
+        <h1>
+            O que vamos estudar?
+        </h1>
+
+        <p>
+            Escolha uma área para começar.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        {% for area in areas %}
+
+            <div class="card card-editavel">
+
+                <a
+                    href="{% url 'area_detail' area.slug %}"
+                    class="card-link"
+                >
+
+                    <div class="icone">
+                        {{ area.icone }}
+                    </div>
+
+                    <h2>
+                        {{ area.nome }}
+                    </h2>
+
+                    <p>
+                        {{ area.descricao }}
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="{% url 'editar_area' area.id %}"
+                    class="botao-editar"
+                    title="Editar {{ area.nome }}"
+                >
+                    ✎
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="sem-areas">
+
+                <h2>
+                    Nenhuma área cadastrada
+                </h2>
+
+                <p>
+                    Cadastre uma área pela página de gerenciamento.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

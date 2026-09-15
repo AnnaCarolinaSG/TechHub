@@ -1,0 +1,101 @@
+{% extends "estudos/base.html" %}
+
+
+{% block title %}
+    {{ area.nome }} - TechHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="inicio pagina-listagem">
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <span>
+            {{ area.nome }}
+        </span>
+
+    </div>
+
+
+    <div class="intro">
+
+        <span class="tag">
+            ÁREA DE ESTUDO
+        </span>
+
+        <h1>
+            {{ area.nome }}
+        </h1>
+
+        <p>
+            {{ area.descricao }}
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        {% for categoria in categorias %}
+
+            <div class="card card-editavel">
+
+                <a
+                    href="{% url 'categoria_detail' area.slug categoria.slug %}"
+                    class="card-link"
+                >
+
+                    <div class="icone">
+                        📚
+                    </div>
+
+                    <h2>
+                        {{ categoria.nome }}
+                    </h2>
+
+                    <p>
+                        {{ categoria.descricao }}
+                    </p>
+
+                </a>
+
+
+                <a
+                    href="{% url 'editar_categoria' categoria.id %}"
+                    class="botao-editar"
+                    title="Editar {{ categoria.nome }}"
+                >
+                    ✎
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="sem-areas">
+
+                <h2>
+                    Nenhuma categoria cadastrada
+                </h2>
+
+                <p>
+                    Cadastre uma categoria pela página de gerenciamento.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

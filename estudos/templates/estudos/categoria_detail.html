@@ -1,0 +1,111 @@
+{% extends "estudos/base.html" %}
+
+
+{% block title %}
+    {{ categoria.nome }} - TechHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="inicio pagina-listagem">
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'area_detail' area.slug %}">
+            {{ area.nome }}
+        </a>
+
+        <span>›</span>
+
+        <span>
+            {{ categoria.nome }}
+        </span>
+
+    </div>
+
+
+    <div class="intro">
+
+        <span class="tag">
+            {{ area.nome|upper }}
+        </span>
+
+        <h1>
+            {{ categoria.nome }}
+        </h1>
+
+        <p>
+            {{ categoria.descricao }}
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        {% for conteudo in conteudos %}
+
+            <div class="card card-editavel">
+
+                <a
+                    href="{% url 'conteudo_detail' area.slug categoria.slug conteudo.slug %}"
+                    class="card-link"
+                >
+
+                    <div class="icone">
+                        📖
+                    </div>
+
+                    <h2>
+                        {{ conteudo.titulo }}
+                    </h2>
+
+                    <p>
+                        Clique para estudar este conteúdo.
+                    </p>
+
+                    <span class="acessar">
+                        Estudar →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{% url 'editar_conteudo' conteudo.id %}"
+                    class="botao-editar"
+                    title="Editar {{ conteudo.titulo }}"
+                >
+                    ✎
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="sem-areas">
+
+                <h2>
+                    Nenhum conteúdo cadastrado
+                </h2>
+
+                <p>
+                    Cadastre um conteúdo pela página de gerenciamento.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

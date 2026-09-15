@@ -1,0 +1,245 @@
+{% extends "estudos/base.html" %}
+
+
+{% block title %}
+    Busca - TechHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="pagina-busca">
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <span>
+            Busca
+        </span>
+
+    </div>
+
+
+    <div class="cabecalho-busca">
+
+        <h1>
+            Pesquisar
+        </h1>
+
+        <form
+            method="GET"
+            action="{% url 'buscar' %}"
+            class="form-busca"
+        >
+
+            <input
+                type="text"
+                name="q"
+                value="{{ termo }}"
+                placeholder="Digite o que deseja estudar..."
+                autocomplete="off"
+            >
+
+            <button type="submit">
+                🔎 Buscar
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if termo %}
+
+        <div class="titulo-resultados">
+
+            <h2>
+                Resultados para "{{ termo }}"
+            </h2>
+
+        </div>
+
+
+        {% if areas %}
+
+            <div class="grupo-resultados">
+
+                <h3>
+                    Áreas
+                </h3>
+
+                <div class="cards">
+
+                    {% for area in areas %}
+
+                        <a
+                            href="{% url 'area_detail' area.slug %}"
+                            class="card"
+                        >
+
+                            <div class="icone">
+                                {{ area.icone }}
+                            </div>
+
+                            <h2>
+                                {{ area.nome }}
+                            </h2>
+
+                            <p>
+                                {{ area.descricao }}
+                            </p>
+
+                            <span class="acessar">
+                                Acessar →
+                            </span>
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if categorias %}
+
+            <div class="grupo-resultados">
+
+                <h3>
+                    Categorias
+                </h3>
+
+                <div class="cards">
+
+                    {% for categoria in categorias %}
+
+                        <a
+                            href="{% url 'categoria_detail' categoria.area.slug categoria.slug %}"
+                            class="card"
+                        >
+
+                            <div class="icone">
+                                📚
+                            </div>
+
+                            <h2>
+                                {{ categoria.nome }}
+                            </h2>
+
+                            <p>
+                                {{ categoria.area.nome }}
+                            </p>
+
+                            <span class="acessar">
+                                Acessar →
+                            </span>
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if conteudos %}
+
+            <div class="grupo-resultados">
+
+                <h3>
+                    Conteúdos
+                </h3>
+
+                <div class="cards">
+
+                    {% for conteudo in conteudos %}
+
+                        <a
+                            href="{% url 'conteudo_detail' conteudo.categoria.area.slug conteudo.categoria.slug conteudo.slug %}"
+                            class="card"
+                        >
+
+                            <div class="icone">
+                                📖
+                            </div>
+
+                            <h2>
+                                {{ conteudo.titulo }}
+                            </h2>
+
+                            <p>
+                                {{ conteudo.categoria.area.nome }}
+                                ›
+                                {{ conteudo.categoria.nome }}
+                            </p>
+
+                            <span class="acessar">
+                                Estudar →
+                            </span>
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if not areas and not categorias and not conteudos %}
+
+            <div class="sem-resultados">
+
+                <div class="icone">
+                    🔎
+                </div>
+
+                <h2>
+                    Nenhum resultado encontrado
+                </h2>
+
+                <p>
+                    Tente pesquisar usando outro termo.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    {% else %}
+
+        <div class="sem-resultados">
+
+            <div class="icone">
+                🔎
+            </div>
+
+            <h2>
+                O que você quer estudar?
+            </h2>
+
+            <p>
+                Pesquise por uma área, categoria ou conteúdo.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

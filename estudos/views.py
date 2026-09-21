@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Area, Categoria, Conteudo
 from django.db.models import Q
-from .forms import ConteudoForm
+from .forms import ConteudoForm, CriarConteudoCategoriaForm
 
 
 def home(request):
@@ -81,6 +81,47 @@ def conteudo_detail(request, area_slug, categoria_slug, conteudo_slug):
     return render(
         request,
         "estudos/conteudo_detail.html",
+        contexto
+    )
+def criar_conteudo(request, categoria_id):
+
+    categoria = get_object_or_404(
+        Categoria,
+        id=categoria_id
+    )
+
+    if request.method == "POST":
+
+        form = CriarConteudoCategoriaForm(request.POST)
+
+        if form.is_valid():
+
+            conteudo = form.save(commit=False)
+
+            conteudo.categoria = categoria
+            conteudo.publicado = True
+
+            conteudo.save()
+
+            return redirect(
+                "categoria_detail",
+                area_slug=categoria.area.slug,
+                categoria_slug=categoria.slug
+            )
+
+    else:
+
+        form = CriarConteudoCategoriaForm()
+
+    contexto = {
+        "form": form,
+        "categoria": categoria,
+        "area": categoria.area,
+    }
+
+    return render(
+        request,
+        "estudos/criar_conteudo.html",
         contexto
     )
 

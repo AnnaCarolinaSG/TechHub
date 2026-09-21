@@ -1,0 +1,109 @@
+{% extends "estudos/base.html" %}
+
+
+{% block title %}
+    Criar conteúdo - TechHub
+{% endblock %}
+
+
+{% block extra_head %}
+    {{ form.media }}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="pagina-edicao">
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'area_detail' area.slug %}">
+            {{ area.nome }}
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'categoria_detail' area.slug categoria.slug %}">
+            {{ categoria.nome }}
+        </a>
+
+        <span>›</span>
+
+        <span>
+            Criar conteúdo
+        </span>
+
+    </div>
+
+
+    <div class="formulario-edicao">
+
+        <span class="tag">
+            NOVO CONTEÚDO
+        </span>
+
+        <h1>
+            Criar conteúdo
+        </h1>
+
+        <p class="categoria-destino">
+            Será adicionado em
+            <strong>{{ categoria.nome }}</strong>
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label for="{{ form.titulo.id_for_label }}">
+                Título
+            </label>
+
+            {{ form.titulo }}
+
+
+            <label for="{{ form.conteudo.id_for_label }}">
+                Conteúdo
+            </label>
+
+            {{ form.conteudo }}
+
+
+            <div class="acoes-edicao">
+
+                <div></div>
+
+                <div class="acoes-principais">
+
+                    <a
+                        href="{% url 'categoria_detail' area.slug categoria.slug %}"
+                        class="botao-cancelar"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="botao-salvar"
+                    >
+                        Criar conteúdo
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}
